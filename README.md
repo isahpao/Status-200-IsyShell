@@ -125,107 +125,107 @@ Para executar o projeto localmente, é necessário rodar o backend e o frontend 
 
 ```bash
 git clone https://github.com/isahpao/Status-200-IsyShell
-
 ```
 
 Acesse a pasta principal do projeto:
 
 ```bash
 cd Status-200-IsyShell/status-200-isyshell
-
 ```
 
 ### **2️⃣ Rodar o Backend com Docker**
 
-Acesse a pasta do backend:
+#### Opção recomendada: Docker Compose
+
+Execute:
+
+```bash
+docker compose up --build
+```
+
+Esse comando constrói a imagem Docker e inicia a API automaticamente.
+
+A API ficará disponível em:
+
+```txt
+http://localhost:8000
+```
+
+A documentação Swagger pode ser acessada em:
+
+```txt
+http://localhost:8000/docs
+```
+
+---
+
+#### Opção alternativa: Docker manual
+
+Caso prefira rodar manualmente, acesse a pasta do backend:
 
 ```bash
 cd backend
-
 ```
 
 Construa a imagem Docker:
 
 ```bash
 docker build -t status200-isyshell .
-
 ```
 
 Execute o container:
 
 ```bash
 docker run -p 8000:8000 status200-isyshell
-
-```
-
-A API ficará disponível em:
-
-```bash
-http://localhost:8000
-
-```
-
-A documentação Swagger pode ser acessada em:
-
-```bash
-http://localhost:8000/docs
-
 ```
 
 ### **3️⃣ Rodar o Frontend Simples**
 
 Abra o arquivo diretamente no navegador ou utilize uma extensão como o Live Server no VS Code para uma visualização mais dinâmica.
 
-```bash
+```txt
 frontend/index.html
-
 ```
 
 A interface conseguirá consumir a API em:
 
-```bash
+```txt
 http://localhost:8000
-
 ```
 
 ### **4️⃣ Rodar o Frontend Premium**
 
-Em outro terminal, acesse novamente a pasta principal do projeto:
+Em outro terminal, acesse a pasta do frontend React:
 
 ```bash
 cd frontend-lovable
-
 ```
 
 Instale as dependências:
 
 ```bash
 npm install
-
 ```
 
 Execute o projeto:
 
 ```bash
 npm run dev
-
 ```
 
 O frontend será iniciado em uma porta local, como:
 
-```bash
+```txt
 http://localhost:8080
-
 ```
 
-ou
+ou:
 
-```bash
+```txt
 http://localhost:5173
-
 ```
 
-Com o backend rodando na porta 8000, o frontend React conseguirá executar os scripts autorizados e exibir os logs de auditoria.
+Com o backend rodando na porta `8000`, o frontend React conseguirá executar os scripts autorizados e exibir os logs de auditoria.
 
 ## **Testes Realizados:**
 

@@ -32,7 +32,27 @@ X-Isy-Token: isy-secret-token
 
 ## 🚀 Como Rodar
 
+### Opção recomendada
+
+A partir da pasta principal do projeto:
+
+```bash
+cd Status-200-IsyShell/status-200-isyshell
+```
+Execute:
+
+```bash
+docker compose up --build
+```
+### Opção alternativa
+
+Também é possível rodar diretamente pela pasta do backend:
+
+```bash
+cd backend
+```
 Construa a imagem Docker:
+
 
 ```bash
 docker build -t status200-isyshell .
@@ -43,7 +63,6 @@ Execute o container:
 ```bash
 docker run -p 8000:8000 status200-isyshell
 ```
-
 A API ficará disponível em:
 
 ```txt

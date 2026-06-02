@@ -1,0 +1,11 @@
+version: "3.9"
+
+services:
+  api:
+    build:
+      context: ./backend
+    container_name: status200-isyshell-api
+    ports:
+      - "8000:8000"
+    volumes:
+      - ./backend/scripts:/app/scripts:ro
