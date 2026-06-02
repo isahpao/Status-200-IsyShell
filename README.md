@@ -83,7 +83,7 @@ Abaixo estão alguns registros da aplicação em funcionamento, demonstrando a A
 
 A rota de listagem retorna os scripts cadastrados no catálogo da API, garantindo que apenas automações previamente autorizadas possam ser executadas.
 
-![Swagger listando scripts autorizados](docs/images/swagger-scripts.png)
+![Swagger listando scripts autorizados](status-200-isyshell/docs/images/swagger-scripts.png)
 
 ---
 
@@ -91,7 +91,7 @@ A rota de listagem retorna os scripts cadastrados no catálogo da API, garantind
 
 Exemplo de execução de script pela documentação Swagger, retornando status de sucesso e saída estruturada da operação.
 
-![Swagger executando script com sucesso](docs/images/swagger-execute-200.png)
+![Swagger executando script com sucesso](status-200-isyshell/docs/images/swagger-execute-200.png)
 
 ---
 
@@ -99,7 +99,7 @@ Exemplo de execução de script pela documentação Swagger, retornando status d
 
 Interface exibindo o retorno da API após a execução de um script autorizado.
 
-![Frontend exibindo resultado da execução](docs/images/frontend-result-success.png)
+![Frontend exibindo resultado da execução](status-200-isyshell/docs/images/frontend-result-success.png)
 
 ---
 
@@ -107,7 +107,7 @@ Interface exibindo o retorno da API após a execução de um script autorizado.
 
 Tabela/listagem de logs registrando as execuções realizadas, com nome do script, status, saída, erros e data/hora.
 
-![Frontend exibindo logs de auditoria](docs/images/frontend-logs.png)
+![Frontend exibindo logs de auditoria](status-200-isyshell/docs/images/frontend-logs.png)
 
 ---
 
@@ -115,7 +115,7 @@ Tabela/listagem de logs registrando as execuções realizadas, com nome do scrip
 
 Registro do backend em execução via Docker, com a API recebendo requisições reais e retornando respostas HTTP como `200 OK` para execuções válidas e `401 Unauthorized` para token inválido.
 
-![Terminal com backend rodando no Docker](docs/images/docker-terminal.png)
+![Terminal com backend rodando no Docker](status-200-isyshell/docs/images/docker-terminal.png)
 
 ## 🚀 Como Rodar o Projeto
 
