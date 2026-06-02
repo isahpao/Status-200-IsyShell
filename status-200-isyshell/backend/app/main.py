@@ -27,7 +27,10 @@ VALID_TOKEN = "isy-secret-token"
 
 SCRIPTS = {
     "cleanup_logs": "/app/scripts/cleanup_logs.sh",
-    "docker_status": "/app/scripts/docker_status.sh"
+    "docker_status": "/app/scripts/docker_status.sh",
+    "check_disk_usage": "/app/scripts/check_disk_usage.sh",
+    "restart_service": "/app/scripts/restart_service.sh",
+    "backup_database": "/app/scripts/backup_database.sh"
 }
 
 

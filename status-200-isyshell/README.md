@@ -22,12 +22,8 @@ O Status 200 IsyShell transforma comandos manuais em chamadas de API seguras, co
 
 ## Scripts de teste
 
-- verificar_status
-- limpar_logs
-- reiniciar_servico
-
-## Rotas previstas
-
-- GET /scripts
-- POST /execute
-- GET /logs
+cleanup_logs       → limpeza de logs antigos
+docker_status      → verificação de containers
+check_disk_usage   → checagem de uso de disco
+restart_service    → simulação de restart de serviço
+backup_database    → simulação de backup
