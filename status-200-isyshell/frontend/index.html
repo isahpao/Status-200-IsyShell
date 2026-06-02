@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Status 200 IsyShell</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <main class="container">
+    <section class="hero">
+      <span class="badge">Equipe Status 200</span>
+      <h1>Status 200 IsyShell</h1>
+      <p>
+        Interface simples para executar scripts autorizados por API,
+        com autenticação, validação e auditoria.
+      </p>
+    </section>
+
+    <section class="card">
+      <h2>Autenticação</h2>
+      <label for="token">Token X-Isy-Token</label>
+      <input id="token" type="text" placeholder="Digite o token de acesso" />
+    </section>
+
+    <section class="card">
+      <h2>Executar script</h2>
+
+      <label for="scriptName">Script</label>
+      <select id="scriptName">
+        <option value="verificar_status">verificar_status</option>
+        <option value="limpar_logs">limpar_logs</option>
+        <option value="reiniciar_servico">reiniciar_servico</option>
+      </select>
+
+      <label for="parametro">Parâmetro</label>
+      <input id="parametro" type="text" placeholder="Ex: nginx, producao, api" />
+
+      <button id="executeBtn">Executar script</button>
+    </section>
+
+    <section class="card">
+      <h2>Resultado</h2>
+      <pre id="resultado">Aguardando execução...</pre>
+    </section>
+
+    <section class="card">
+      <div class="section-header">
+        <h2>Logs</h2>
+        <button id="logsBtn" class="secondary">Atualizar logs</button>
+      </div>
+      <pre id="logs">Nenhum log carregado.</pre>
+    </section>
+  </main>
+
+  <script src="script.js"></script>
+</body>
+</html>
