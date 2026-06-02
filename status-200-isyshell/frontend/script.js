@@ -2,30 +2,21 @@ const API_URL = "http://localhost:8000";
 
 const tokenInput = document.getElementById("token");
 const scriptNameInput = document.getElementById("scriptName");
-const parametroInput = document.getElementById("parametro");
 const resultado = document.getElementById("resultado");
 const logs = document.getElementById("logs");
 
 document.getElementById("executeBtn").addEventListener("click", async () => {
   const token = tokenInput.value.trim();
   const scriptName = scriptNameInput.value;
-  const parametro = parametroInput.value.trim();
 
   resultado.textContent = "Executando...";
 
   try {
-    const response = await fetch(`${API_URL}/execute`, {
+    const response = await fetch(`${API_URL}/api/v1/scripts/${scriptName}/execute`, {
       method: "POST",
       headers: {
-        "Content-Type": "application/json",
         "X-Isy-Token": token
-      },
-      body: JSON.stringify({
-        script: scriptName,
-        params: {
-          valor: parametro
-        }
-      })
+      }
     });
 
     const data = await response.json();
@@ -41,7 +32,8 @@ document.getElementById("logsBtn").addEventListener("click", async () => {
   logs.textContent = "Carregando logs...";
 
   try {
-    const response = await fetch(`${API_URL}/logs`, {
+    const response = await fetch(`${API_URL}/api/v1/logs`, {
+      method: "GET",
       headers: {
         "X-Isy-Token": token
       }

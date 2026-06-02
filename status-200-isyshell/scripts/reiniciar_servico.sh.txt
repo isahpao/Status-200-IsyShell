@@ -1,3 +1,0 @@
-#!/bin/bash
-echo "Reiniciando serviço: $1"
-echo "Serviço $1 reiniciado com sucesso."

@@ -1,0 +1,3 @@
+#!/bin/bash
+echo "Iniciando limpeza de logs no ambiente: $1"
+echo "Logs antigos removidos com sucesso."
