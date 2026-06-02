@@ -3,114 +3,104 @@ from fastapi.middleware.cors import CORSMiddleware
 from sqlalchemy.orm import Session
 import subprocess
 
-from database import SessionLocal, engine
-from models import Base, ExecutionLog
-
-# cria tabelas automaticamente
+from app.database import SessionLocal, engine
+from app.models import Base, ExecutionLog
 
 Base.metadata.create_all(bind=engine)
 
 app = FastAPI(
-title="IsyShell Automation API",
-version="1.0.0"
+    title="IsyShell Automation API",
+    version="1.0.0"
 )
 
-# libera frontend Lovable
-
 app.add_middleware(
-CORSMiddleware,
-allow_origins=["*"],
-allow_credentials=True,
-allow_methods=["*"],
-allow_headers=["*"],
+    CORSMiddleware,
+    allow_origins=["*"],
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
 )
 
 VALID_TOKEN = "isy-secret-token"
 
 SCRIPTS = {
-"cleanup_logs": "/app/scripts/cleanup_logs.sh",
-"docker_status": "/app/scripts/docker_status.sh"
+    "cleanup_logs": "/app/scripts/cleanup_logs.sh",
+    "docker_status": "/app/scripts/docker_status.sh"
 }
 
 def verify_token(token: str):
-if token != VALID_TOKEN:
-raise HTTPException(
-status_code=401,
-detail="Invalid token"
-)
+    if token != VALID_TOKEN:
+        raise HTTPException(
+            status_code=401,
+            detail="Invalid token"
+        )
 
 @app.get("/")
 def health():
-return {
-"status": "online"
-}
+    return {
+        "status": "online"
+    }
 
 @app.get("/api/v1/scripts")
 def list_scripts(
-x_isy_token: str = Header(...)
+    x_isy_token: str = Header(...)
 ):
-verify_token(x_isy_token)
+    verify_token(x_isy_token)
 
-```
-return {
-    "scripts": list(SCRIPTS.keys())
-}
-```
+    return {
+        "scripts": list(SCRIPTS.keys())
+    }
 
 @app.post("/api/v1/scripts/{script_name}/execute")
 def execute_script(
-script_name: str,
-x_isy_token: str = Header(...)
+    script_name: str,
+    x_isy_token: str = Header(...)
 ):
-verify_token(x_isy_token)
+    verify_token(x_isy_token)
 
-```
-if script_name not in SCRIPTS:
-    raise HTTPException(
-        status_code=404,
-        detail="Script not found"
+    if script_name not in SCRIPTS:
+        raise HTTPException(
+            status_code=404,
+            detail="Script not found"
+        )
+
+    command = [SCRIPTS[script_name]]
+
+    result = subprocess.run(
+        command,
+        capture_output=True,
+        text=True
     )
 
-command = [SCRIPTS[script_name]]
+    db: Session = SessionLocal()
 
-result = subprocess.run(
-    command,
-    capture_output=True,
-    text=True
-)
+    log = ExecutionLog(
+        script_name=script_name,
+        parameters="[]",
+        status="success" if result.returncode == 0 else "error",
+        stdout=result.stdout,
+        stderr=result.stderr
+    )
 
-db: Session = SessionLocal()
+    db.add(log)
+    db.commit()
+    db.close()
 
-log = ExecutionLog(
-    script_name=script_name,
-    parameters="[]",
-    status="success" if result.returncode == 0 else "error",
-    stdout=result.stdout,
-    stderr=result.stderr
-)
-
-db.add(log)
-db.commit()
-db.close()
-
-return {
-    "status": log.status,
-    "stdout": result.stdout,
-    "stderr": result.stderr,
-    "return_code": result.returncode
-}
-```
+    return {
+        "status": log.status,
+        "stdout": result.stdout,
+        "stderr": result.stderr,
+        "return_code": result.returncode
+    }
 
 @app.get("/api/v1/logs")
 def get_logs(
-x_isy_token: str = Header(...)
+    x_isy_token: str = Header(...)
 ):
-verify_token(x_isy_token)
+    verify_token(x_isy_token)
 
-```
-db: Session = SessionLocal()
+    db: Session = SessionLocal()
 
-logs = db.query(ExecutionLog).all()
+    logs = db.query(ExecutionLog).all()
 
-return logs
-```
+    return logs
