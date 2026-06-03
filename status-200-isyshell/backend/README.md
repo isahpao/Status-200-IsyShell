@@ -13,6 +13,8 @@ Esta API é responsável por validar autenticação, listar scripts autorizados,
 - Registro de logs em SQLite
 - Documentação automática via Swagger
 - Execução em container Docker
+- Administração de scripts com descrição, parâmetros e status ativo/inativo
+- Alteração dinâmica do token de autenticação
 
 ## 🔐 Autenticação
 
@@ -77,9 +79,7 @@ http://localhost:8000/docs
 
 ## 📡 Rotas Principais
 
-```http
-GET /
-```
+### Automação
 
 ```http
 GET /api/v1/scripts
@@ -89,9 +89,42 @@ GET /api/v1/scripts
 POST /api/v1/scripts/{script_name}/execute
 ```
 
+### Auditoria
+
 ```http
 GET /api/v1/logs
 ```
+
+### Administração
+
+```http
+GET /api/v1/admin/scripts
+```
+
+```http
+POST /api/v1/admin/scripts
+```
+
+```http
+PATCH /api/v1/admin/scripts/{script_name}/status
+```
+
+```http
+PUT /api/v1/admin/token
+```
+
+## 🧩 Administração
+
+A API possui rotas administrativas disponíveis via Swagger para:
+
+- listar scripts cadastrados;
+- cadastrar novos scripts Bash;
+- informar descrição curta;
+- informar parâmetros esperados;
+- definir status ativo ou inativo;
+- alterar dinamicamente o token de autenticação.
+
+Essas rotas permitem administrar o catálogo de scripts autorizados sem permitir a execução livre de comandos no servidor.
 
 ## 🧾 Auditoria
 

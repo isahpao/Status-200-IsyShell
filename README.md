@@ -24,6 +24,8 @@ O sistema conta com uma API em **FastAPI**, autenticação via token, execução
 - 🐳 **Execução com Docker:** O backend roda em container Docker.
 - 🖥️ **Frontend Simples:** Interface em HTML, CSS e JavaScript para operação básica.
 - 🚀 **Frontend React Premium:** Interface mais robusta em React/Vite para demonstração do produto.
+- 🧩 **Administração de Scripts:** Cadastro/listagem de scripts com descrição, parâmetros e status ativo/inativo.
+- 🔑 **Alteração Dinâmica de Token:** Rota administrativa para atualização do token de autenticação.
 
 ## 🛠️ Tecnologias Utilizadas
 
@@ -50,6 +52,7 @@ Durante o planejamento e execução, algumas decisões foram tomadas para tornar
 4. **Uso de Docker** → O backend foi containerizado para facilitar a execução e padronizar o ambiente.
 5. **Frontend separado do backend** → A interface consome a API por meio de requisições HTTP, mantendo uma arquitetura mais organizada.
 6. **Scripts simulando situações reais** → Os scripts foram pensados com base em rotinas comuns de infraestrutura e operação, como backup, limpeza de logs e verificação de containers.
+7. **Administração via Swagger** → Para atender ao escopo administrativo do desafio, foram criadas rotas específicas para cadastro de scripts, alteração de status ativo/inativo e atualização dinâmica do token de autenticação.
 
 ## 📜 **Scripts Autorizados** 
 
@@ -227,6 +230,24 @@ http://localhost:5173
 
 Com o backend rodando na porta `8000`, o frontend React conseguirá executar os scripts autorizados e exibir os logs de auditoria.
 
+## 📡 Rotas Principais
+
+### Automação
+
+- `GET /api/v1/scripts`
+- `POST /api/v1/scripts/{script_name}/execute`
+
+### Auditoria
+
+- `GET /api/v1/logs`
+
+### Administração
+
+- `GET /api/v1/admin/scripts`
+- `POST /api/v1/admin/scripts`
+- `PATCH /api/v1/admin/scripts/{script_name}/status`
+- `PUT /api/v1/admin/token`
+
 ## **Testes Realizados:**
 
 ✅ API iniciando corretamente via Docker.
@@ -247,4 +268,12 @@ Com o backend rodando na porta `8000`, o frontend React conseguirá executar os 
 
 ✅ Integração com o frontend React premium.
 
+✅ Listagem administrativa dos scripts cadastrados.
 
+✅ Cadastro de scripts com descrição, parâmetros e status ativo/inativo.
+
+✅ Atualização de status lógico ativo/inativo dos scripts.
+
+✅ Alteração dinâmica do token de autenticação.
+
+✅ Bloqueio de requisições com token inválido retornando 401 Unauthorized.
