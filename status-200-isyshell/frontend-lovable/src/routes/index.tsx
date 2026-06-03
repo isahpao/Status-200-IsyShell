@@ -67,26 +67,43 @@ function IsyShellPanel() {
   };
 
   const loadScripts = useCallback(async () => {
-    if (!token) return;
-    try {
-      const res = await fetch(`${API_BASE}/api/v1/scripts`, { headers: headers() });
-      if (!res.ok) throw new Error(`HTTP ${res.status}`);
-      const data = await res.json();
-      const list: string[] = Array.isArray(data)
-        ? data.map((s: unknown) => (typeof s === "string" ? s : (s as { name: string }).name))
-        : Array.isArray((data as { scripts?: unknown[] }).scripts)
-          ? (data as { scripts: unknown[] }).scripts.map((s) =>
-              typeof s === "string" ? s : (s as { name: string }).name,
+  if (!token) return;
+
+  try {
+    const res = await fetch(`${API_BASE}/api/v1/scripts`, { headers: headers() });
+
+    if (!res.ok) throw new Error(`HTTP ${res.status}`);
+
+    const data = await res.json();
+
+    const list: string[] = Array.isArray(data)
+      ? data.map((s: unknown) =>
+          typeof s === "string"
+            ? s
+            : (s as { script_name?: string; name?: string }).script_name ??
+              (s as { script_name?: string; name?: string }).name ??
+              "",
+        )
+      : Array.isArray((data as { scripts?: unknown[] }).scripts)
+        ? (data as { scripts: unknown[] }).scripts
+            .map((s) =>
+              typeof s === "string"
+                ? s
+                : (s as { script_name?: string; name?: string }).script_name ??
+                  (s as { script_name?: string; name?: string }).name ??
+                  "",
             )
-          : FALLBACK_SCRIPTS;
-      if (list.length) {
-        setScripts(list);
-        if (!list.includes(selected)) setSelected(list[0]);
-      }
-    } catch {
-      setScripts(FALLBACK_SCRIPTS);
+            .filter(Boolean)
+        : FALLBACK_SCRIPTS;
+
+    if (list.length) {
+      setScripts(list);
+      if (!list.includes(selected)) setSelected(list[0]);
     }
-  }, [token, headers, selected]);
+  } catch {
+    setScripts(FALLBACK_SCRIPTS);
+  }
+}, [token, headers, selected]);
 
   const loadLogs = useCallback(async () => {
     if (!token) {
